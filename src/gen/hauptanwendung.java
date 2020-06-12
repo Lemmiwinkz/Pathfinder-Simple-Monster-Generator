@@ -7,21 +7,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTabbedPane;
-import javax.swing.JButton;
-import javax.swing.BoxLayout;
-import java.awt.Component;
 import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
 import java.awt.TextArea;
-import javax.swing.AbstractAction;
-import java.awt.event.ActionEvent;
-import javax.swing.Action;
+import java.awt.Panel;
+import java.awt.Button;
 
 public class hauptanwendung extends JFrame {
 
 	private JPanel contentPane;
-	private final Action action = new SwingAction();
-	private TextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -60,14 +54,17 @@ public class hauptanwendung extends JFrame {
 		tabbedPane.setEnabledAt(0, true);
 		
 		JScrollPane scrollPaneMO = new JScrollPane();
+		scrollPaneMO.setEnabled(false);
 		tabbedPane.addTab("Monster Options", null, scrollPaneMO, "Depending on your choices in Array and Grafts your monster will have different Monster Options avaiable");
 		tabbedPane.setEnabledAt(1, false);
 		
 		JScrollPane scrollPaneSpl = new JScrollPane();
+		scrollPaneSpl.setEnabled(false);
 		tabbedPane.addTab("Spells", null, scrollPaneSpl, "If your monster can cast Spells or Spell-like-Abilities then this is the Tab for you !");
 		tabbedPane.setEnabledAt(2, false);
 		
 		JScrollPane scrollPaneHO = new JScrollPane();
+		scrollPaneHO.setEnabled(false);
 		tabbedPane.addTab("Homebrew Options", null, scrollPaneHO, "Creating a Monster is not easy, if you wish for further tweaking options not covered by the Simple Monster Creation Rules then you will find em here.");
 		tabbedPane.setEnabledAt(3, false);
 		
@@ -76,29 +73,22 @@ public class hauptanwendung extends JFrame {
 		scrollPaneMonster.setToolTipText("Contains the finished Monster");
 		contentPane.add(scrollPaneMonster);
 		
-		JButton btnGenerateBtn = new JButton("Generate");
-		btnGenerateBtn.setAction(action);
-		scrollPaneMonster.setColumnHeaderView(btnGenerateBtn);
-		btnGenerateBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-		btnGenerateBtn.setToolTipText("Clicking this will generate the Monster on the RIGHT side according to your specifics entered on the LEFT side");
-		
-		textArea = new TextArea();
+		TextArea textArea = new TextArea();
 		textArea.setText("Your Monster will spawn here.");
 		textArea.setEditable(false);
 		scrollPaneMonster.setViewportView(textArea);
-	}
-	private class SwingAction extends AbstractAction {
-		public SwingAction() {
-			putValue(NAME, "SwingAction");
-			putValue(SHORT_DESCRIPTION, "Some short description");
-		}
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
-	public String getTextAreaText() {
-		return textArea.getText();
-	}
-	public void setTextAreaText(String text) {
-		textArea.setText(text);
+		
+		Panel panel = new Panel();
+		scrollPaneMonster.setColumnHeaderView(panel);
+		
+		Button buttonGM = new Button("Generate Monster !");
+		panel.add(buttonGM);
+		
+		JRadioButton rdbtnReset = new JRadioButton("Reset ?");
+		panel.add(rdbtnReset);
+		
+		Button buttonRVC = new Button("Reset Vanilla Choices !");
+		buttonRVC.setEnabled(false);
+		panel.add(buttonRVC);
 	}
 }
