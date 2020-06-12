@@ -53,6 +53,7 @@ public class hauptanwendung extends JFrame {
 		tabbedPane.addTab("Array and Graft", null, scrollPaneAaG, "In this Tab you can set the basic arrays and grafts for your Monster, as well as it's Type and CR");
 		
 		rdbtnHO = new JRadioButton("HO enabled ?");
+		rdbtnHO.setSelected(true);
 		rdbtnHO.setToolTipText("Want to enable Homebrew Options ?");
 		scrollPaneAaG.setViewportView(rdbtnHO);
 		tabbedPane.setEnabledAt(0, true);
