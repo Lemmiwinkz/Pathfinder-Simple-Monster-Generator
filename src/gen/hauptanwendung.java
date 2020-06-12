@@ -12,11 +12,16 @@ import javax.swing.BoxLayout;
 import java.awt.Component;
 import javax.swing.JScrollPane;
 import javax.swing.JRadioButton;
+import java.awt.TextArea;
+import javax.swing.AbstractAction;
+import java.awt.event.ActionEvent;
+import javax.swing.Action;
 
 public class hauptanwendung extends JFrame {
 
 	private JPanel contentPane;
-	private JRadioButton rdbtnHO;
+	private final Action action = new SwingAction();
+	private TextArea textArea;
 
 	/**
 	 * Launch the application.
@@ -44,18 +49,14 @@ public class hauptanwendung extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.X_AXIS));
+		contentPane.setLayout(null);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.setBounds(5, 5, 461, 776);
 		contentPane.add(tabbedPane);
 		
 		JScrollPane scrollPaneAaG = new JScrollPane();
 		tabbedPane.addTab("Array and Graft", null, scrollPaneAaG, "In this Tab you can set the basic arrays and grafts for your Monster, as well as it's Type and CR");
-		
-		rdbtnHO = new JRadioButton("HO enabled ?");
-		rdbtnHO.setSelected(true);
-		rdbtnHO.setToolTipText("Want to enable Homebrew Options ?");
-		scrollPaneAaG.setViewportView(rdbtnHO);
 		tabbedPane.setEnabledAt(0, true);
 		
 		JScrollPane scrollPaneMO = new JScrollPane();
@@ -71,18 +72,33 @@ public class hauptanwendung extends JFrame {
 		tabbedPane.setEnabledAt(3, false);
 		
 		JScrollPane scrollPaneMonster = new JScrollPane();
+		scrollPaneMonster.setBounds(476, 5, 416, 776);
 		scrollPaneMonster.setToolTipText("Contains the finished Monster");
 		contentPane.add(scrollPaneMonster);
 		
 		JButton btnGenerateBtn = new JButton("Generate");
+		btnGenerateBtn.setAction(action);
 		scrollPaneMonster.setColumnHeaderView(btnGenerateBtn);
 		btnGenerateBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
 		btnGenerateBtn.setToolTipText("Clicking this will generate the Monster on the RIGHT side according to your specifics entered on the LEFT side");
+		
+		textArea = new TextArea();
+		textArea.setText("Your Monster will spawn here.");
+		textArea.setEditable(false);
+		scrollPaneMonster.setViewportView(textArea);
 	}
-	public boolean getRdbtnHOSelected() {
-		return rdbtnHO.isSelected();
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
 	}
-	public void setRdbtnHOSelected(boolean selected) {
-		rdbtnHO.setSelected(selected);
+	public String getTextAreaText() {
+		return textArea.getText();
+	}
+	public void setTextAreaText(String text) {
+		textArea.setText(text);
 	}
 }
